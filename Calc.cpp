@@ -7,11 +7,16 @@ float degToRad(int angle)
 
 void calculatePosXZ(float& posX, float& posZ, float angle, float radius)
 {
-	posX = sin(degToRad(angle)) * radius;
-
 	if (angle == 0)
+	{
+		posX = 0;
 		posZ = radius;
+	}
 	else
+	{
+		posX = sin(degToRad(angle)) * radius;
 		posZ = cos(degToRad(angle)) * radius;
+	}
+		
 
 }

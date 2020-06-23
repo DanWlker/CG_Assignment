@@ -36,7 +36,6 @@ void cameraMovement(unsigned char key, int x, int y)
 	case 'd':
 		cameraAngle += 2;
 		calculatePosXZ(cameraPos[0], cameraPos[2], cameraAngle, cameraRadius);
-
 		break;
 
 	case 27:

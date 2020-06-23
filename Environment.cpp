@@ -1,6 +1,7 @@
 #pragma once
 #include <GL/glut.h>
 #include <windows.h>
+#include "Light.h"
 
 void setup()
 {
@@ -11,12 +12,14 @@ void setup()
 	glEnable(GL_LIGHT0);
 
 	//Set lighting intensity and color (White)
-	GLfloat ambientColor[] = { 0.2, 0.2, 0.2, 1.0 };
-	GLfloat diffuseColor[] = { 0.8, 0.8, 0.8, 1.0 };
-	GLfloat specularColor[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat ambientColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+	GLfloat diffuseColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat specularColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientColor);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseColor);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularColor);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	glShadeModel(GL_SMOOTH);
 
