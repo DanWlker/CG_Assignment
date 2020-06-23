@@ -7,25 +7,19 @@
 
 void drawFloor()
 {
-	glPushMatrix();
-
 	glBegin(GL_POLYGON);
 		glVertex3f(1.0, 0.0, 1.0);
 		glVertex3f(1.0, 0.0, -1.0);
 		glVertex3f(-1.0, 0.0, -1.0);
 		glVertex3f(-1.0, 0.0, 1.0);
 	glEnd();
-
-	glPopMatrix();
 }
 
 void display()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
 	gluLookAt
 	(
@@ -33,6 +27,9 @@ void display()
 		cameraTarget[0], cameraTarget[1], cameraTarget[2],  //where the camera is looking at
 		0, 1, 0 //camera up vector
 	);
+
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
 
 	//set material properties
 	GLfloat qaBlack[] = { 0.0, 0.0, 0.0, 1.0 };
@@ -49,10 +46,7 @@ void display()
 	glMaterialf(GL_FRONT, GL_SHININESS, 128.0);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, qaLowAmbient);
 
-	
-	glPushMatrix();
-		glutSolidSphere(.5, 20, 20);
-	glPopMatrix();
+	glutSolidSphere(.5, 20, 20);
 
 	drawFloor();
 

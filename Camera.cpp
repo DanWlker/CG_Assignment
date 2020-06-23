@@ -3,10 +3,11 @@
 #include <GL/glut.h>
 #include "Calc.h"
 
-float cameraPos[3] = { 0.0f, 2.0f, cameraRadius };
-float cameraTarget[3] = { 0.0f, 0.0f, 0.0f };
 float cameraRadius = 3.0f;
 int cameraAngle = 0;
+float cameraPos[3] = { 0.0f, 2.0f, cameraRadius };
+float cameraTarget[3] = { 0.0f, 0.0f, 0.0f };
+
 
 //to rotate object
 void cameraMovement(unsigned char key, int x, int y)
