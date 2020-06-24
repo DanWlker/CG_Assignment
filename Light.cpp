@@ -3,7 +3,7 @@
 
 float lightRadius = -3.0f;
 int lightAngle = 0.0f;
-GLfloat lightPos[] = { 0.0, 1.25, lightRadius, 0.0};
+GLfloat lightPos[] = { 0.0, 1.25, lightRadius, 1.0};
 
 //to move position of light source
 void lightMovement(int key, int x, int y)

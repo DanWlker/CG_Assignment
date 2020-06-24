@@ -12,8 +12,8 @@ void setup()
 	glEnable(GL_LIGHT0);
 
 	//Set lighting intensity and color (White)
-	GLfloat ambientColor[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat diffuseColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat ambientColor[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+	GLfloat diffuseColor[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	GLfloat specularColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientColor);

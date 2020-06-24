@@ -3,7 +3,7 @@
 #include "Environment.h"
 #include "Light.h"
 #include "Camera.h"
-#include <cmath>
+#include "Materials.h"
 
 void drawFloor()
 {
@@ -67,7 +67,7 @@ void drawPot()
 	GLfloat n[6][3] = 
 	{  /* Normals for the 6 faces of a cube. */
 		{-1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {1.0, 0.0, 0.0},
-		{0.0, -1.0, 0.0}, {0.0, 0.0, 1.0}, {0.0, 0.0, -1.0} 
+		{0.0, -1.0, 0.0}, {0.0, 0.0, -1.0}, {0.0, 0.0, 1.0} 
 	};
 
 	GLint faces[6][4] = {  /* Vertex indices for the 6 faces of a cube. */
@@ -76,6 +76,7 @@ void drawPot()
 
 	GLfloat v[8][3];
 
+	//body
 	//x y z
 	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.3; //x
 	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.3; //x
@@ -84,39 +85,119 @@ void drawPot()
 	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.15; //z
 	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.15; //z
 
-	float mat_ambient[] = { 0.0f,0.1f,0.06f ,1.0f };
-	float mat_diffuse[] = { 0.0f,0.50980392f,0.50980392f,1.0f };
-	float mat_specular[] = { 0.50196078f,0.50196078f,0.50196078f,1.0f };
-	float shine = 32.0f;
-
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
-	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
-
-	for (int i = 0; i < 6; i++) {
-
-		if (n[i][1] == 1.0)
-		{
-			float mat_ambT[] = { 0.48f, 0.247f, 0.0f, 1.0f };
-			float mat_difT[] = { 0.48f, 0.247f, 0.0f, 1.0f };
-			float mat_speT[] = { 0.0f, 0.0f, 0.0f, 0.0f };
-			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambT);
-			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_difT);
-			glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_speT);
-		}
-
+	setMaterials("porcelain");
+	
+	for (int i = 0; i < 6; i++) 
+	{
 			glBegin(GL_QUADS);
-			glNormal3fv(&n[i][0]);
-			glVertex3fv(&v[faces[i][0]][0]);
-			glVertex3fv(&v[faces[i][1]][0]);
-			glVertex3fv(&v[faces[i][2]][0]);
-			glVertex3fv(&v[faces[i][3]][0]);
+				glNormal3fv(&n[i][0]);
+				glVertex3fv(&v[faces[i][0]][0]);
+				glVertex3fv(&v[faces[i][1]][0]);
+				glVertex3fv(&v[faces[i][2]][0]);
+				glVertex3fv(&v[faces[i][3]][0]);
 			glEnd();
+	}
 
-			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
-			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
-			glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+	//back
+	//x y z
+	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.30; //x
+	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.30; //x
+	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
+	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.30; //y
+	v[0][2] = v[3][2] = v[4][2] = v[7][2] = -0.1; //z
+	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.15; //z
+
+	for (int i = 0; i < 6; i++)
+	{
+		glBegin(GL_QUADS);
+		glNormal3fv(&n[i][0]);
+		glVertex3fv(&v[faces[i][0]][0]);
+		glVertex3fv(&v[faces[i][1]][0]);
+		glVertex3fv(&v[faces[i][2]][0]);
+		glVertex3fv(&v[faces[i][3]][0]);
+		glEnd();
+	}
+
+	//front
+	//x y z
+	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.30; //x
+	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.30; //x
+	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
+	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.30; //y
+	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.15; //z
+	v[1][2] = v[2][2] = v[5][2] = v[6][2] = 0.1; //z
+
+	for (int i = 0; i < 6; i++)
+	{
+		glBegin(GL_QUADS);
+		glNormal3fv(&n[i][0]);
+		glVertex3fv(&v[faces[i][0]][0]);
+		glVertex3fv(&v[faces[i][1]][0]);
+		glVertex3fv(&v[faces[i][2]][0]);
+		glVertex3fv(&v[faces[i][3]][0]);
+		glEnd();
+	}
+
+	//left
+	//x y z
+	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.30; //x
+	v[4][0] = v[5][0] = v[6][0] = v[7][0] = -0.25; //x
+	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
+	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.30; //y
+	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.1; //z
+	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.1; //z
+
+	for (int i = 0; i < 6; i++)
+	{
+		glBegin(GL_QUADS);
+		glNormal3fv(&n[i][0]);
+		glVertex3fv(&v[faces[i][0]][0]);
+		glVertex3fv(&v[faces[i][1]][0]);
+		glVertex3fv(&v[faces[i][2]][0]);
+		glVertex3fv(&v[faces[i][3]][0]);
+		glEnd();
+	}
+
+	//right
+	//x y z
+	v[0][0] = v[1][0] = v[2][0] = v[3][0] = 0.25; //x
+	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.3; //x
+	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
+	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.30; //y
+	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.1; //z
+	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.1; //z
+
+	for (int i = 0; i < 6; i++)
+	{
+		glBegin(GL_QUADS);
+		glNormal3fv(&n[i][0]);
+		glVertex3fv(&v[faces[i][0]][0]);
+		glVertex3fv(&v[faces[i][1]][0]);
+		glVertex3fv(&v[faces[i][2]][0]);
+		glVertex3fv(&v[faces[i][3]][0]);
+		glEnd();
+	}
+
+	//dirt
+	//x y z
+	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.25; //x
+	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.25; //x
+	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
+	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.27; //y
+	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.1; //z
+	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.1; //z
+
+	setMaterials("dirt");
+
+	for (int i = 0; i < 6; i++)
+	{
+		glBegin(GL_QUADS);
+		glNormal3fv(&n[i][0]);
+		glVertex3fv(&v[faces[i][0]][0]);
+		glVertex3fv(&v[faces[i][1]][0]);
+		glVertex3fv(&v[faces[i][2]][0]);
+		glVertex3fv(&v[faces[i][3]][0]);
+		glEnd();
 	}
 }
 
@@ -147,7 +228,6 @@ void display()
 	drawPot();
 	//drawStem();
 	//drawFlower();
-
 
 	glutSwapBuffers();
 }
