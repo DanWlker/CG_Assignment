@@ -4,19 +4,11 @@
 #include "Light.h"
 #include "Camera.h"
 #include "Materials.h"
+#include "Calc.h"
 
 void drawFloor()
 {
-	float mat_ambient[] = { 0.435f, 0.5225f, 0.4575f, 0.95f };
-	float mat_diffuse[] = { 0.54f, 0.89f, 0.63f, 0.95f };
-	float mat_specular[] = { 0.0, 0.0, 0.0, 0.0 };
-	float shine = 12.8f;
-
-
-	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialf(GL_FRONT, GL_SHININESS, shine);
+	setMaterials("floor");
 
 	float floorSize = 1.5f;
 
@@ -203,9 +195,34 @@ void drawPot()
 
 void drawFlower()
 {
+	glPushMatrix();
+	glTranslatef(0.0, 1.0, 0.0);
+	
+	glPushMatrix();
+	setMaterials("petal");
+	
+	for (int i = 0; i < 180; i += 30)
+	{
+		glNormal3f(0.0f, 0.0f, 1.0f);
+		glRotatef(i, 0.0, 0.0, 1.0);
+		glBegin(GL_POLYGON);
+		for (int i = 0; i < 360; i++)
+		{
+			glVertex3f(0.25 * cos(degToRad(i)), 0.175 * sin(degToRad(i)), 0);
+		}
+		glEnd();
+	}
+	glPopMatrix();
 
+	glPushMatrix();
+	setMaterials("pistil");
+	glScalef(1.0, 1.0, 0.5);
+	//glColor3f(253.0 / 255.0, 236.0 / 255.0, 150.0 / 255.0);
+	glutSolidSphere(0.1, 20, 20);
+	glPopMatrix();
+
+	glPopMatrix();
 }
-
 
 
 void display()
@@ -227,7 +244,7 @@ void display()
 	drawFloor();
 	drawPot();
 	//drawStem();
-	//drawFlower();
+	drawFlower();
 
 	glutSwapBuffers();
 }
