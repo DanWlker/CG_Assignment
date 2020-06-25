@@ -5,37 +5,37 @@
 
 float camera_radiusf = 3.0f;
 int camera_anglei = 0;
-float arr_camera_posf[3] = { 0.0f, 2.0f, camera_radiusf };
-float arr_camera_targetf[3] = { 0.0f, 0.0f, 0.0f };
+float camera_posf[3] = { 0.0f, 2.0f, camera_radiusf };
+float camera_targetf[3] = { 0.0f, 0.0f, 0.0f };
 
 
 //to rotate object
-void func_cameraMovement(unsigned char keyc, int xi, int yi)
+void cameraMovement(unsigned char keyc, int xi, int yi)
 {
 	switch (keyc)
 	{
 	case 'w':
-		if (arr_camera_posf[1] > 3.0f)
-			arr_camera_posf[1] = 3.0f;
+		if (camera_posf[1] > 3.0f)
+			camera_posf[1] = 3.0f;
 		else
-			arr_camera_posf[1] += 0.1f;
+			camera_posf[1] += 0.1f;
 		break;
 
 	case 'a':
 		camera_anglei -= 2;
-		calculatePosXZ(arr_camera_posf[0], arr_camera_posf[2], camera_anglei, camera_radiusf);
+		calculatePosXZ(camera_posf[0], camera_posf[2], camera_anglei, camera_radiusf);
 		break;
 
 	case 's':
-		if (arr_camera_posf[1] < 0.0f)
-			arr_camera_posf[1] = 0.0f;
+		if (camera_posf[1] < 0.0f)
+			camera_posf[1] = 0.0f;
 		else
-			arr_camera_posf[1] -= 0.1f;
+			camera_posf[1] -= 0.1f;
 		break;
 
 	case 'd':
 		camera_anglei += 2;
-		calculatePosXZ(arr_camera_posf[0], arr_camera_posf[2], camera_anglei, camera_radiusf);
+		calculatePosXZ(camera_posf[0], camera_posf[2], camera_anglei, camera_radiusf);
 		break;
 
 	case 27:

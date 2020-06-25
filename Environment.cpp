@@ -19,7 +19,7 @@ void setup()
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientColor);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseColor);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularColor);
-	glLightfv(GL_LIGHT0, GL_POSITION, arr_light_posf);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_posf);
 
 	glShadeModel(GL_SMOOTH);
 
@@ -29,7 +29,7 @@ void setup()
 }
 
 //to resize window
-void func_resize(int wi, int hi)
+void resize(int wi, int hi)
 {
 	if (hi == 0)
 		hi = 1;

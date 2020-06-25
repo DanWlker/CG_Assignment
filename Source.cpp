@@ -141,7 +141,7 @@ void drawFlower()
 	glPopMatrix();
 }
 
-void func_display()
+void display()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -149,12 +149,12 @@ void func_display()
 
 	gluLookAt
 	(
-		arr_camera_posf[0], arr_camera_posf[1], arr_camera_posf[2], //camera position in the world
-		arr_camera_targetf[0], arr_camera_targetf[1], arr_camera_targetf[2],  //where the camera is looking at
+		camera_posf[0], camera_posf[1], camera_posf[2], //camera position in the world
+		camera_targetf[0], camera_targetf[1], camera_targetf[2],  //where the camera is looking at
 		0, 1, 0 //camera up vector
 	);
 
-	glLightfv(GL_LIGHT0, GL_POSITION, arr_light_posf);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_posf);
 
 	glRotatef(-30.0, 0.0, 1.0, 0.0);
 	drawFloor();
@@ -174,10 +174,10 @@ int main(int argc, char* argv[])
 	glutCreateWindow("Computer Graphics Assignment");
 
 	setup();
-	glutDisplayFunc(func_display);
-	glutReshapeFunc(func_resize);
-	glutKeyboardFunc(func_cameraMovement);
-	glutSpecialFunc(func_lightMovement);
+	glutDisplayFunc(display);
+	glutReshapeFunc(resize);
+	glutKeyboardFunc(cameraMovement);
+	glutSpecialFunc(lightMovement);
 
 	glutMainLoop();
 	return 0;
