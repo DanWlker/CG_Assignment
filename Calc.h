@@ -1,3 +1,3 @@
 #pragma once
-float degToRad(int angle);
-void calculatePosXZ(float& posX, float& posZ, float angle, float radius);
+float degToRadf(int anglei);
+void calculatePosXZ(float& posXf, float& posZf, int anglei, float radiusf);

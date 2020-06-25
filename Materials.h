@@ -1,3 +1,3 @@
 #pragma once
 #include <string>
-void setMaterials(std::string mat);
+void setMaterial(std::string mats);

@@ -1,22 +1,21 @@
 #include <cmath>
 
-float degToRad(int angle)
+float degToRadf(int anglei)
 {
-	return angle * 3.141592 / 180;
+	return (float)anglei * 3.141592f / 180.0f;
 }
 
-void calculatePosXZ(float& posX, float& posZ, float angle, float radius)
+void calculatePosXZ(float& posXf, float& posZf, int anglei, float radiusf)
 {
-	if (angle == 0)
+	if (anglei == 0)
 	{
-		posX = 0;
-		posZ = radius;
+		posXf = 0;
+		posZf = radiusf;
 	}
 	else
 	{
-		posX = sin(degToRad(angle)) * radius;
-		posZ = cos(degToRad(angle)) * radius;
+		posXf = sin(degToRadf(anglei)) * radiusf;
+		posZf = cos(degToRadf(anglei)) * radiusf;
 	}
-		
 
 }

@@ -1,5 +1,5 @@
 #pragma once
-extern float lightRadius;
-extern int lightAngle;
-extern GLfloat lightPos[4];
-void lightMovement(int key, int x, int y);
+extern float light_radiusf;
+extern int light_anglei;
+extern GLfloat arr_light_posf[4];
+void func_lightMovement(int keyi, int xi, int yi);

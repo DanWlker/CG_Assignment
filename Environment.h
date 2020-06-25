@@ -1,3 +1,3 @@
 #pragma once
 void setup();
-void resize(int w, int h);
+void func_resize(int wi, int hi);

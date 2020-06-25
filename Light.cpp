@@ -1,37 +1,37 @@
 #include <GL/glut.h>
 #include "Calc.h"
 
-float lightRadius = -3.0f;
-int lightAngle = 0.0f;
-GLfloat lightPos[] = { 0.0, 1.25, lightRadius, 1.0};
+float light_radiusf = -3.0f;
+int light_anglei = 0;
+GLfloat arr_light_posf[4] = { 0.0f, 1.25f, light_radiusf, 1.0f};
 
 //to move position of light source
-void lightMovement(int key, int x, int y)
+void func_lightMovement(int keyi, int xi, int yi)
 {
-	switch (key)
+	switch (keyi)
 	{
 	case GLUT_KEY_LEFT:
-		lightAngle += 2;
-		calculatePosXZ(lightPos[0], lightPos[2], lightAngle, lightRadius);
+		light_anglei -= 2;
+		calculatePosXZ(arr_light_posf[0], arr_light_posf[2], light_anglei, light_radiusf);
 		break;
 
 	case GLUT_KEY_RIGHT:
-		lightAngle -= 2;
-		calculatePosXZ(lightPos[0], lightPos[2], lightAngle, lightRadius);
+		light_anglei += 2;
+		calculatePosXZ(arr_light_posf[0], arr_light_posf[2], light_anglei, light_radiusf);
 		break;
 
 	case GLUT_KEY_UP:
-		if (lightPos[1] > 3.0f)
-			lightPos[1] = 3.0;
+		if (arr_light_posf[1] > 3.0f)
+			arr_light_posf[1] = 3.0f;
 		else
-			lightPos[1] += 0.1;
+			arr_light_posf[1] += 0.1f;
 		break;
 
 	case GLUT_KEY_DOWN:
-		if (lightPos[1] < 0.0f)
-			lightPos[1] = 0;
+		if (arr_light_posf[1] < 0.0f)
+			arr_light_posf[1] = 0.0f;
 		else
-			lightPos[1] -= 0.1;
+			arr_light_posf[1] -= 0.1f;
 		break;
 
 	default:

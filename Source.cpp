@@ -8,19 +8,17 @@
 
 void drawFloor()
 {
-	setMaterials("floor");
+	setMaterial("floor");
 
-	float floorSize = 1.5f;
+	float floor_sizef = 1.5f;
 
 	glBegin(GL_POLYGON);
 		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(floorSize, 0.0, floorSize);
-		glVertex3f(floorSize, 0.0, -floorSize);
-		glVertex3f(-floorSize, 0.0, -floorSize);
-		glVertex3f(-floorSize, 0.0, floorSize);
+		glVertex3f(floor_sizef, 0.0f, floor_sizef);
+		glVertex3f(floor_sizef, 0.0f, -floor_sizef);
+		glVertex3f(-floor_sizef, 0.0f, -floor_sizef);
+		glVertex3f(-floor_sizef, 0.0f, floor_sizef);
 	glEnd();
-
-
 }
 
 void drawStem()
@@ -54,178 +52,96 @@ void drawStem()
 	}
 }
 
-void drawPot()
+void drawCuboid(
+	float x_low_coorf, float x_high_coorf,
+	float y_low_coorf, float y_high_coorf,
+	float z_low_coorf, float z_high_coorf)
 {
-	GLfloat n[6][3] = 
-	{  /* Normals for the 6 faces of a cube. */
+	//Normals for the 6 faces
+	GLfloat arr_face_normalf[6][3] =
+	{  
 		{-1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {1.0, 0.0, 0.0},
-		{0.0, -1.0, 0.0}, {0.0, 0.0, -1.0}, {0.0, 0.0, 1.0} 
+		{0.0, -1.0, 0.0}, {0.0, 0.0, -1.0}, {0.0, 0.0, 1.0}
 	};
 
-	GLint faces[6][4] = {  /* Vertex indices for the 6 faces of a cube. */
+	GLint arr_face_vertexi[6][4] = {  //Vertex labels for the indices of the 6 faces
 	  {0, 1, 2, 3}, {3, 2, 6, 7}, {7, 6, 5, 4},
 	  {4, 5, 1, 0}, {5, 6, 2, 1}, {7, 4, 0, 3} };
 
-	GLfloat v[8][3];
+	GLfloat arr_vertex_coorf[8][3]; //To store actual coordinates of the vertices
 
+	arr_vertex_coorf[0][0] = arr_vertex_coorf[1][0] = arr_vertex_coorf[2][0] = arr_vertex_coorf[3][0] = x_low_coorf; //x
+	arr_vertex_coorf[4][0] = arr_vertex_coorf[5][0] = arr_vertex_coorf[6][0] = arr_vertex_coorf[7][0] = x_high_coorf; //x
+	arr_vertex_coorf[0][1] = arr_vertex_coorf[1][1] = arr_vertex_coorf[4][1] = arr_vertex_coorf[5][1] = y_low_coorf; //y
+	arr_vertex_coorf[2][1] = arr_vertex_coorf[3][1] = arr_vertex_coorf[6][1] = arr_vertex_coorf[7][1] = y_high_coorf; //y
+	arr_vertex_coorf[1][2] = arr_vertex_coorf[2][2] = arr_vertex_coorf[5][2] = arr_vertex_coorf[6][2] = z_low_coorf; //z
+	arr_vertex_coorf[0][2] = arr_vertex_coorf[3][2] = arr_vertex_coorf[4][2] = arr_vertex_coorf[7][2] = z_high_coorf; //z
+
+	for (int i = 0; i < 6; i++)
+	{
+		glBegin(GL_QUADS);
+			glNormal3fv(&arr_face_normalf[i][0]);
+			glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][0]][0]);
+			glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][1]][0]);
+			glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][2]][0]);
+			glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][3]][0]);
+		glEnd();
+	}
+}
+
+void drawPot()
+{
 	//body
-	//x y z
-	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.3; //x
-	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.3; //x
-	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0; //y
-	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.25; //y
-	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.15; //z
-	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.15; //z
+	setMaterial("porcelain");
+	drawCuboid(-0.3f, 0.3f, 0.0f, 0.25f, -0.15f, 0.15f);
 
-	setMaterials("porcelain");
-	
-	for (int i = 0; i < 6; i++) 
-	{
-			glBegin(GL_QUADS);
-				glNormal3fv(&n[i][0]);
-				glVertex3fv(&v[faces[i][0]][0]);
-				glVertex3fv(&v[faces[i][1]][0]);
-				glVertex3fv(&v[faces[i][2]][0]);
-				glVertex3fv(&v[faces[i][3]][0]);
-			glEnd();
-	}
+	//back top part
+	drawCuboid(-0.3f, 0.3f, 0.25f, 0.3f, -0.15f, -0.1f);
 
-	//back
-	//x y z
-	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.30; //x
-	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.30; //x
-	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
-	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.30; //y
-	v[0][2] = v[3][2] = v[4][2] = v[7][2] = -0.1; //z
-	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.15; //z
+	//front top part
+	drawCuboid(-0.3f, 0.3f, 0.25f, 0.3f, 0.1f, 0.15f);
 
-	for (int i = 0; i < 6; i++)
-	{
-		glBegin(GL_QUADS);
-		glNormal3fv(&n[i][0]);
-		glVertex3fv(&v[faces[i][0]][0]);
-		glVertex3fv(&v[faces[i][1]][0]);
-		glVertex3fv(&v[faces[i][2]][0]);
-		glVertex3fv(&v[faces[i][3]][0]);
-		glEnd();
-	}
+	//left top part
+	drawCuboid(-0.3f, -0.25f, 0.25f, 0.3f, -0.1f, 0.1f);
 
-	//front
-	//x y z
-	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.30; //x
-	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.30; //x
-	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
-	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.30; //y
-	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.15; //z
-	v[1][2] = v[2][2] = v[5][2] = v[6][2] = 0.1; //z
-
-	for (int i = 0; i < 6; i++)
-	{
-		glBegin(GL_QUADS);
-		glNormal3fv(&n[i][0]);
-		glVertex3fv(&v[faces[i][0]][0]);
-		glVertex3fv(&v[faces[i][1]][0]);
-		glVertex3fv(&v[faces[i][2]][0]);
-		glVertex3fv(&v[faces[i][3]][0]);
-		glEnd();
-	}
-
-	//left
-	//x y z
-	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.30; //x
-	v[4][0] = v[5][0] = v[6][0] = v[7][0] = -0.25; //x
-	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
-	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.30; //y
-	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.1; //z
-	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.1; //z
-
-	for (int i = 0; i < 6; i++)
-	{
-		glBegin(GL_QUADS);
-		glNormal3fv(&n[i][0]);
-		glVertex3fv(&v[faces[i][0]][0]);
-		glVertex3fv(&v[faces[i][1]][0]);
-		glVertex3fv(&v[faces[i][2]][0]);
-		glVertex3fv(&v[faces[i][3]][0]);
-		glEnd();
-	}
-
-	//right
-	//x y z
-	v[0][0] = v[1][0] = v[2][0] = v[3][0] = 0.25; //x
-	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.3; //x
-	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
-	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.30; //y
-	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.1; //z
-	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.1; //z
-
-	for (int i = 0; i < 6; i++)
-	{
-		glBegin(GL_QUADS);
-		glNormal3fv(&n[i][0]);
-		glVertex3fv(&v[faces[i][0]][0]);
-		glVertex3fv(&v[faces[i][1]][0]);
-		glVertex3fv(&v[faces[i][2]][0]);
-		glVertex3fv(&v[faces[i][3]][0]);
-		glEnd();
-	}
+	//right top part
+	drawCuboid(0.25f, 0.3f, 0.25f, 0.3f, -0.1f, 0.1f);
 
 	//dirt
-	//x y z
-	v[0][0] = v[1][0] = v[2][0] = v[3][0] = -0.25; //x
-	v[4][0] = v[5][0] = v[6][0] = v[7][0] = 0.25; //x
-	v[0][1] = v[1][1] = v[4][1] = v[5][1] = 0.25; //y
-	v[2][1] = v[3][1] = v[6][1] = v[7][1] = 0.27; //y
-	v[0][2] = v[3][2] = v[4][2] = v[7][2] = 0.1; //z
-	v[1][2] = v[2][2] = v[5][2] = v[6][2] = -0.1; //z
-
-	setMaterials("dirt");
-
-	for (int i = 0; i < 6; i++)
-	{
-		glBegin(GL_QUADS);
-		glNormal3fv(&n[i][0]);
-		glVertex3fv(&v[faces[i][0]][0]);
-		glVertex3fv(&v[faces[i][1]][0]);
-		glVertex3fv(&v[faces[i][2]][0]);
-		glVertex3fv(&v[faces[i][3]][0]);
-		glEnd();
-	}
+	setMaterial("dirt");
+	drawCuboid(-0.25f, 0.25f, 0.25f, 0.27f, -0.1f, 0.1f);
 }
 
 void drawFlower()
 {
 	glPushMatrix();
-	glTranslatef(0.0, 1.0, 0.0);
-	
-	glPushMatrix();
-	setMaterials("petal");
-	
-	for (int i = 0; i < 180; i += 30)
-	{
-		glNormal3f(0.0f, 0.0f, 1.0f);
-		glRotatef(i, 0.0, 0.0, 1.0);
-		glBegin(GL_POLYGON);
-		for (int i = 0; i < 360; i++)
-		{
-			glVertex3f(0.25 * cos(degToRad(i)), 0.175 * sin(degToRad(i)), 0);
-		}
-		glEnd();
-	}
-	glPopMatrix();
+		glTranslatef(0.0, 1.0, 0.0);
 
-	glPushMatrix();
-	setMaterials("pistil");
-	glScalef(1.0, 1.0, 0.5);
-	//glColor3f(253.0 / 255.0, 236.0 / 255.0, 150.0 / 255.0);
-	glutSolidSphere(0.1, 20, 20);
-	glPopMatrix();
+		glPushMatrix();
+			setMaterial("petal");
 
+			glNormal3f(0.0f, 0.0f, 1.0f);
+			for (int i = 0; i < 180; i += 30)
+			{
+				glRotatef(i, 0.0, 0.0, 1.0);
+				glBegin(GL_POLYGON);
+				for (int i = 0; i < 360; i++)
+				{
+					glVertex3f(0.25 * cos(degToRadf((float)i)), 0.175 * sin(degToRadf((float)i)), 0);
+				}
+				glEnd();
+			}
+		glPopMatrix();
+
+		glPushMatrix();
+			setMaterial("pistil");
+			glScalef(1.0, 1.0, 0.5);
+			glutSolidSphere(0.1, 20, 20);
+			glPopMatrix();
 	glPopMatrix();
 }
 
-
-void display()
+void func_display()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -233,12 +149,12 @@ void display()
 
 	gluLookAt
 	(
-		cameraPos[0], cameraPos[1], cameraPos[2], //camera position in the world
-		cameraTarget[0], cameraTarget[1], cameraTarget[2],  //where the camera is looking at
+		arr_camera_posf[0], arr_camera_posf[1], arr_camera_posf[2], //camera position in the world
+		arr_camera_targetf[0], arr_camera_targetf[1], arr_camera_targetf[2],  //where the camera is looking at
 		0, 1, 0 //camera up vector
 	);
 
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT0, GL_POSITION, arr_light_posf);
 
 	glRotatef(-30.0, 0.0, 1.0, 0.0);
 	drawFloor();
@@ -258,10 +174,10 @@ int main(int argc, char* argv[])
 	glutCreateWindow("Computer Graphics Assignment");
 
 	setup();
-	glutDisplayFunc(display);
-	glutReshapeFunc(resize);
-	glutKeyboardFunc(cameraMovement);
-	glutSpecialFunc(lightMovement);
+	glutDisplayFunc(func_display);
+	glutReshapeFunc(func_resize);
+	glutKeyboardFunc(func_cameraMovement);
+	glutSpecialFunc(func_lightMovement);
 
 	glutMainLoop();
 	return 0;

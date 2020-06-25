@@ -19,7 +19,7 @@ void setup()
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientColor);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseColor);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularColor);
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT0, GL_POSITION, arr_light_posf);
 
 	glShadeModel(GL_SMOOTH);
 
@@ -29,16 +29,16 @@ void setup()
 }
 
 //to resize window
-void resize(int w, int h)
+void func_resize(int wi, int hi)
 {
-	if (h == 0)
-		h = 1;
-	float aspectRatio = (float)w / h;
+	if (hi == 0)
+		hi = 1;
+	float aspectRatio = (float)wi / hi;
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glViewport(0, 0, w, h);
+	glViewport(0, 0, wi, hi);
 
 	gluPerspective(45, aspectRatio, 2, 100);
 

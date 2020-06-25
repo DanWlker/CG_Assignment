@@ -3,39 +3,39 @@
 #include <GL/glut.h>
 #include "Calc.h"
 
-float cameraRadius = 3.0f;
-int cameraAngle = 0;
-float cameraPos[3] = { 0.0f, 2.0f, cameraRadius };
-float cameraTarget[3] = { 0.0f, 0.0f, 0.0f };
+float camera_radiusf = 3.0f;
+int camera_anglei = 0;
+float arr_camera_posf[3] = { 0.0f, 2.0f, camera_radiusf };
+float arr_camera_targetf[3] = { 0.0f, 0.0f, 0.0f };
 
 
 //to rotate object
-void cameraMovement(unsigned char key, int x, int y)
+void func_cameraMovement(unsigned char keyc, int xi, int yi)
 {
-	switch (key)
+	switch (keyc)
 	{
 	case 'w':
-		if (cameraPos[1] > 3.0f)
-			cameraPos[1] = 3.0;
+		if (arr_camera_posf[1] > 3.0f)
+			arr_camera_posf[1] = 3.0f;
 		else
-			cameraPos[1] += 0.1f;
+			arr_camera_posf[1] += 0.1f;
 		break;
 
 	case 'a':
-		cameraAngle -= 2;
-		calculatePosXZ(cameraPos[0], cameraPos[2], cameraAngle, cameraRadius);
+		camera_anglei -= 2;
+		calculatePosXZ(arr_camera_posf[0], arr_camera_posf[2], camera_anglei, camera_radiusf);
 		break;
 
 	case 's':
-		if (cameraPos[1] < 0.0f)
-			cameraPos[1] = 0.0f;
+		if (arr_camera_posf[1] < 0.0f)
+			arr_camera_posf[1] = 0.0f;
 		else
-			cameraPos[1] -= 0.1f;
+			arr_camera_posf[1] -= 0.1f;
 		break;
 
 	case 'd':
-		cameraAngle += 2;
-		calculatePosXZ(cameraPos[0], cameraPos[2], cameraAngle, cameraRadius);
+		camera_anglei += 2;
+		calculatePosXZ(arr_camera_posf[0], arr_camera_posf[2], camera_anglei, camera_radiusf);
 		break;
 
 	case 27:
