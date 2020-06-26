@@ -200,7 +200,15 @@ void display()
 	glutSwapBuffers();
 }
 
-
+void timer(int value)
+{
+	if (point_3[1] < 1.5f)
+	{
+		point_3[1] += 0.05;
+	}
+	glutPostRedisplay();
+	glutTimerFunc(80, timer, 0);
+}
 
 int main(int argc, char* argv[])
 {
@@ -215,6 +223,7 @@ int main(int argc, char* argv[])
 	glutReshapeFunc(resize);
 	glutKeyboardFunc(cameraMovement);
 	glutSpecialFunc(lightMovement);
+	glutTimerFunc(100, timer, 0);
 
 	glutMainLoop();
 	return 0;
