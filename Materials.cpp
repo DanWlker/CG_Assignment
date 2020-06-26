@@ -42,26 +42,26 @@ void setMaterial(std::string mats)
 
 	if (mats == "petal")
 	{
-		float mat_ambf[] = { 207.0f / 255.0f, 159.0f / 255.0f, 201.0f / 255.0f, 0.9f };
-		float mat_diff[] = { 238.0f / 255.0f, 199.0f / 255.0f, 223.0f / 255.0f, 0.9f };
-		float mat_spef[] = { 223.0f / 255.0f, 192.0f / 255.0f, 220.0f / 255.0f, 0.8f };
-		float shinef = 5.0f;
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambf);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diff);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_spef);
-		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinef);
+		float mat_ambient[] = { 207.0 / 255.0, 160.0 / 255.0, 182.0 / 255.0, 1.0f };
+		float mat_diffuse[] = { 255.0 / 255.0, 198.0 / 255.0, 224.0 / 255.0, 1.0f };
+		float mat_specular[] = { 235.0 / 255.0, 186.0 / 255.0, 207.0 / 255.0, 1.0f };
+		float shine = 30.0f;
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
 		return;
 	}
 
 	if (mats == "pistil")
 	{
-		float mat_ambf[] = { 225.0f / 255.0f, 216.0f / 255.0f, 134.0f / 255.0f, 1.0f };
-		float mat_diff[] = { 254.0f / 255.0f, 244.0f / 255.0f, 150.0f / 255.0f, 1.0f };
-		float mat_spef[] = { 239.0f / 255.0f, 232.0f / 255.0f, 159.0f / 255.0f, 1.0f };
-		float shinef = 5.0f;
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambf);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diff);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_spef);
-		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shinef);
+		float mat_ambient[] = { 237.0 / 255.0, 203.0 / 255.0, 25.0 / 255.0, 1.0f };
+		float mat_diffuse[] = { 254.0 / 255.0, 225.0 / 255.0, 52.0 / 255.0, 1.0f };
+		float mat_specular[] = { 254.0 / 255.0, 217.0 / 255.0, 0.0 / 255.0, 1.0f };
+		float shine = 30.0f;
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
 	}
 }

@@ -1,4 +1,5 @@
-#include <GL/glut.h>
+﻿#include <GL/glut.h>
+#include <math.h>
 #include <windows.h>
 #include "Environment.h"
 #include "Light.h"
@@ -21,23 +22,66 @@ void drawFloor()
 	glEnd();
 }
 
+void tangentBezier(float t, float point_1[2], float point_2[2], float point_3[2], float& tanX, float& tanY)
+{
+	tanX = 2 * (1 - t) * (point_2[0] - point_1[0]) + 2 * t * (point_3[0] - point_2[0]);
+	tanY = 2 * (1 - t) * (point_2[1] - point_1[1]) + 2 * t * (point_3[1] - point_2[1]);
+
+	float unit = sqrt(tanX * tanX + tanY * tanY);
+
+	tanX /= unit;
+	tanY /= unit;
+}
+
+float angleOfRotation(float x2, float y2)
+{
+}
+
 void drawStem()
 {
-	GLfloat top, bottom;
-	GLfloat x, z;
-	GLfloat angle;
+	/*float top, bottom;
+	float x, y, z;
+	float angle;
 
 	float PI = 3.1415;
 	float radius = 0.03;
 
-	int slices = 15;
+	int slices = 15;*/
 
-	for (int i = 0; i < slices; ++i)
+	float t = 0;
+	float point_1[2] = { 0, 0 };
+	float point_2[2] = { 1.3, 0.26};
+	float point_3[2] = { 0.56, 0.94 };
+	float tanX, tanY;
+
+	float y, z;
+
+	glBegin(GL_LINE_STRIP);
+	for (t = 0; t < 1; t += 0.1)
+	{
+		glPushMatrix();
+
+		y = (1 - t) * (1 - t) * point_1[0] + 2 * (1 - t) * t * point_2[0] + t * t * point_3[0];
+		z = (1 - t) * (1 - t) * point_1[1] + 2 * (1 - t) * t * point_2[1] + t * t * point_3[1];
+		tangentBezier(t, point_1, point_2, point_3, tanX, tanY);
+
+
+		glVertex3f(0, y, z);
+		glPopMatrix();
+	}
+	glEnd();
+	
+
+
+
+	/*for (int i = 0; i < slices; ++i)
 	{
 		top = (float)(i + 1) / (float)slices;
 		bottom = (float)i / (float)slices;
 
 		glColor3f(1.0f - top, 0.0, bottom);
+
+	
 
 		glBegin(GL_QUAD_STRIP);
 		for (int j = 0; j <= 360; ++j)
@@ -49,7 +93,7 @@ void drawStem()
 			glVertex3f(x, bottom, z);
 		}
 		glEnd();
-	}
+	}*/
 }
 
 void drawCuboid(
@@ -116,18 +160,19 @@ void drawFlower()
 {
 	glPushMatrix();
 		glTranslatef(0.0, 1.0, 0.0);
+		glRotatef(-45.0f, 1.0, 0.0, 0.0);
 
 		glPushMatrix();
 			setMaterial("petal");
-
-			glNormal3f(0.0f, 0.0f, 1.0f);
+			
 			for (int i = 0; i < 180; i += 30)
 			{
 				glRotatef(i, 0.0, 0.0, 1.0);
+				glNormal3f(0.0f, 0.0f, 1.0f);
 				glBegin(GL_POLYGON);
 				for (int i = 0; i < 360; i++)
 				{
-					glVertex3f(0.25 * cos(degToRadf((float)i)), 0.175 * sin(degToRadf((float)i)), 0);
+					glVertex3f(0.25 * cos(degToRadf(i)), 0.125 * sin(degToRadf(i)), 0);
 				}
 				glEnd();
 			}
@@ -158,9 +203,9 @@ void display()
 
 	glRotatef(-30.0, 0.0, 1.0, 0.0);
 	drawFloor();
-	drawPot();
-	//drawStem();
-	drawFlower();
+	//drawPot();
+	drawStem();
+	//drawFlower();
 
 	glutSwapBuffers();
 }
