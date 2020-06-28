@@ -7,11 +7,13 @@ float camera_radiusf = 3.0f;
 int camera_anglei = 0;
 float camera_posf[3] = { 0.0f, 2.0f, camera_radiusf };
 float camera_targetf[3] = { 0.0f, 0.0f, 0.0f };
+bool grow = false;
 
 
 //to rotate object
 void cameraMovement(unsigned char keyc, int xi, int yi)
 {
+
 	switch (keyc)
 	{
 	case 'w':
@@ -38,6 +40,10 @@ void cameraMovement(unsigned char keyc, int xi, int yi)
 		calculatePosXZ(camera_posf[0], camera_posf[2], camera_anglei, camera_radiusf);
 		break;
 
+	case 'g':
+		grow = true;
+		break;
+
 	case 27:
 		exit(0);
 		break;
@@ -45,6 +51,8 @@ void cameraMovement(unsigned char keyc, int xi, int yi)
 	default:
 		break;
 	}
+
+	
 
 	glutPostRedisplay();
 }

@@ -7,9 +7,13 @@
 #include "Materials.h"
 #include "Calc.h"
 
-float point_1[2] = { 0, 0 };
-float point_2[2] = { 0.26, 1.3 };
-float point_3[2] = { 0.94, 0.56 };
+float point_1[2] = { 0, 0.27 };
+float point_2[2] = { 0.1, 1.0 };
+float point_3[2] = { 0.2, 0.4 };
+float p3_limit = 1;
+
+float flower_rotation;
+float flower_trans_y, flower_trans_z;
 
 void drawFloor()
 {
@@ -43,8 +47,8 @@ void drawStem()
 	float top, bottom;
 	float x, z;
 	float PI = 3.1415;
-	float radius = 0.03;
-	int slices = 30;
+	float radius = 0.01;
+	int slices = 20;
 
 	//to move to bezier
 	float t = 0;
@@ -55,8 +59,7 @@ void drawStem()
 
 	for (t = 0; t < 1; t += (float)1.0 / slices)
 	{
-		top = (float)2/ slices;
-		bottom = 0;
+		
 
 		bezZ = (1 - t) * (1 - t) * point_1[0] + 2 * (1 - t) * t * point_2[0] + t * t * point_3[0];
 		bezY = (1 - t) * (1 - t) * point_1[1] + 2 * (1 - t) * t * point_2[1] + t * t * point_3[1];
@@ -65,6 +68,8 @@ void drawStem()
 		tangentBezier(t, point_1, point_2, point_3, tanZ, tanY);
 
 		angle = angleOfRotation(tanZ, tanY);
+		top = 0.1 - sin(abs(angle) * 3.141592/180) * 0.1;
+		bottom = 0;
 
 		glPushMatrix();
 
@@ -84,6 +89,10 @@ void drawStem()
 
 		glPopMatrix();
 	}
+
+	flower_rotation = angle;
+	flower_trans_y = bezY;
+	flower_trans_z = bezZ;
 }
 
 void drawCuboid(
@@ -149,8 +158,8 @@ void drawPot()
 void drawFlower()
 {
 	glPushMatrix();
-		glTranslatef(0.0, 1.0, 0.0);
-		glRotatef(-45.0f, 1.0, 0.0, 0.0);
+		glTranslatef(0.0, flower_trans_y, flower_trans_z);
+		glRotatef(flower_rotation, 0.0, 0.0, 1.0);
 
 		glPushMatrix();
 			setMaterial("petal");
@@ -193,19 +202,21 @@ void display()
 
 	glRotatef(-30.0, 0.0, 1.0, 0.0);
 	drawFloor();
-	//drawPot();
+	drawPot();
 	drawStem();
-	//drawFlower();
+	drawFlower();
 
 	glutSwapBuffers();
 }
 
 void timer(int value)
 {
-	if (point_3[1] < 1.5f)
+	if (point_3[1] < p3_limit && grow)
 	{
 		point_3[1] += 0.05;
+		grow = false;
 	}
+
 	glutPostRedisplay();
 	glutTimerFunc(80, timer, 0);
 }
