@@ -45,7 +45,7 @@ void setMaterial(std::string mats)
 		float mat_ambient[] = { 207.0 / 255.0, 160.0 / 255.0, 182.0 / 255.0, 1.0f };
 		float mat_diffuse[] = { 255.0 / 255.0, 198.0 / 255.0, 224.0 / 255.0, 1.0f };
 		float mat_specular[] = { 235.0 / 255.0, 186.0 / 255.0, 207.0 / 255.0, 1.0f };
-		float shine = 30.0f;
+		float shine = 10.0f;
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
@@ -58,6 +58,18 @@ void setMaterial(std::string mats)
 		float mat_ambient[] = { 237.0 / 255.0, 203.0 / 255.0, 25.0 / 255.0, 1.0f };
 		float mat_diffuse[] = { 254.0 / 255.0, 225.0 / 255.0, 52.0 / 255.0, 1.0f };
 		float mat_specular[] = { 254.0 / 255.0, 217.0 / 255.0, 0.0 / 255.0, 1.0f };
+		float shine = 10.0f;
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+		glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, shine);
+	}
+
+	if (mats == "leaf")
+	{
+		float mat_ambient[] = { 134.0 / 255.0, 189.0 / 255.0, 60.0 / 255.0, 1.0f };
+		float mat_diffuse[] = { 141.0 / 255.0, 198.0 / 255.0, 63.0 / 255.0, 1.0f };
+		float mat_specular[] = { 142.0 / 255.0, 199.0 / 255.0, 65.0 / 255.0, 1.0f };
 		float shine = 30.0f;
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);

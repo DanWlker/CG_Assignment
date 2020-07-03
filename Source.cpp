@@ -22,11 +22,11 @@ void drawFloor()
 	float floor_sizef = 1.5f;
 
 	glBegin(GL_POLYGON);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(floor_sizef, 0.0f, floor_sizef);
-		glVertex3f(floor_sizef, 0.0f, -floor_sizef);
-		glVertex3f(-floor_sizef, 0.0f, -floor_sizef);
-		glVertex3f(-floor_sizef, 0.0f, floor_sizef);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(floor_sizef, 0.0f, floor_sizef);
+	glVertex3f(floor_sizef, 0.0f, -floor_sizef);
+	glVertex3f(-floor_sizef, 0.0f, -floor_sizef);
+	glVertex3f(-floor_sizef, 0.0f, floor_sizef);
 	glEnd();
 }
 
@@ -38,7 +38,7 @@ void tangentBezier(float t, float point_1[2], float point_2[2], float point_3[2]
 
 float angleOfRotation(float x, float y)
 {
-	return atan(x/y) * 180 / 3.141592;
+	return atan(x / y) * 180 / 3.141592;
 }
 
 void drawStem()
@@ -61,28 +61,28 @@ void drawStem()
 	{
 		bezZ = (1 - t) * (1 - t) * point_1[0] + 2 * (1 - t) * t * point_2[0] + t * t * point_3[0];
 		bezY = (1 - t) * (1 - t) * point_1[1] + 2 * (1 - t) * t * point_2[1] + t * t * point_3[1];
-		
+
 		tangentBezier(t, point_1, point_2, point_3, tanZ, tanY);
 
 		angle = angleOfRotation(tanZ, tanY);
-		top = 0.11 - sin(abs(angle) * 3.141592/180) * 0.09;
+		top = 0.11 - sin(abs(angle) * 3.141592 / 180) * 0.09;
 		bottom = 0;
 
 		glPushMatrix();
 
-			glTranslatef(0.0, bezY, bezZ);
-			glRotatef(angle, 1.0, 0.0, 0.0);
+		glTranslatef(0.0, bezY, bezZ);
+		glRotatef(angle, 1.0, 0.0, 0.0);
 
-			glBegin(GL_QUAD_STRIP);
-			for (int j = 0; j <= 360; ++j)
-			{
-				angle_draw = (float)j * PI / 180.0f;
-				x = radius * cos(angle_draw);
-				z = radius * sin(angle_draw);
-				glVertex3f(x, top, z);
-				glVertex3f(x, bottom, z);
-			}
-			glEnd();
+		glBegin(GL_QUAD_STRIP);
+		for (int j = 0; j <= 360; ++j)
+		{
+			angle_draw = (float)j * PI / 180.0f;
+			x = radius * cos(angle_draw);
+			z = radius * sin(angle_draw);
+			glVertex3f(x, top, z);
+			glVertex3f(x, bottom, z);
+		}
+		glEnd();
 
 		glPopMatrix();
 	}
@@ -99,7 +99,7 @@ void drawCuboid(
 {
 	//Normals for the 6 faces
 	GLfloat arr_face_normalf[6][3] =
-	{  
+	{
 		{-1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {1.0, 0.0, 0.0},
 		{0.0, -1.0, 0.0}, {0.0, 0.0, -1.0}, {0.0, 0.0, 1.0}
 	};
@@ -120,13 +120,23 @@ void drawCuboid(
 	for (int i = 0; i < 6; i++)
 	{
 		glBegin(GL_QUADS);
-			glNormal3fv(&arr_face_normalf[i][0]);
-			glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][0]][0]);
-			glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][1]][0]);
-			glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][2]][0]);
-			glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][3]][0]);
+		glNormal3fv(&arr_face_normalf[i][0]);
+		glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][0]][0]);
+		glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][1]][0]);
+		glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][2]][0]);
+		glVertex3fv(&arr_vertex_coorf[arr_face_vertexi[i][3]][0]);
 		glEnd();
 	}
+}
+
+void drawEllipse()
+{
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < 360; i++)
+	{
+		glVertex3f(0.1 * cos(degToRadf(i)), 0.0, 0.04 * sin(degToRadf(i)));
+	}
+	glEnd();
 }
 
 void drawPot()
@@ -155,26 +165,57 @@ void drawPot()
 void drawFlower()
 {
 	glPushMatrix();
-		glTranslatef(0.0, flower_trans_y, flower_trans_z);
-		glRotatef(flower_rotation, 1.0, 0.0, 0.0);
+	glTranslatef(0.0, flower_trans_y, flower_trans_z);
+	glRotatef(flower_rotation, 1.0, 0.0, 0.0);
 
-			setMaterial("petal");
-			for (int i = 0; i < 180; i += 30)
-			{
-				glRotatef(i, 0.0, 1.0, 0.0);
-				glNormal3f(0.0, 1.0, 0.0);
-				glBegin(GL_POLYGON);
-				for (int i = 0; i < 360; i++)
-				{
-					glVertex3f(0.25 * cos(degToRadf(i)), 0, 0.125 * sin(degToRadf(i)));
-				}
-				glEnd();
-			}
-		
-			setMaterial("pistil");
-			glScalef(1.0, 0.5, 1.0);
-			glutSolidSphere(0.1, 20, 20);
+	setMaterial("petal");
+	for (int i = 0; i < 180; i += 30)
+	{
+		glRotatef(i, 0.0, 1.0, 0.0);
+		glNormal3f(0.0, 1.0, 0.0);
+		glBegin(GL_POLYGON);
+		for (int i = 0; i < 360; i++)
+		{
+			glVertex3f(0.25 * cos(degToRadf(i)), 0, 0.125 * sin(degToRadf(i)));
+		}
+		glEnd();
+	}
 
+	setMaterial("pistil");
+	glScalef(1.0, 0.5, 1.0);
+	glutSolidSphere(0.1, 20, 20);
+
+	glPopMatrix();
+}
+
+void drawLeaf()
+{
+	glPushMatrix();
+	setMaterial("leaf");
+	glNormal3f(0.0, 1.0, 0.0);
+	glTranslatef(0.0, 0.5, 0.0);
+	glRotatef(45.0, 1.0, 0.0, 0.0);
+
+	//left leaf
+	glTranslatef(-0.10, 0.0, 0.05);
+	glTranslatef(0.0, 0.0, -0.025);
+	glRotatef(-20.0, 0.0, 1.0, 0.0);
+	drawEllipse();
+
+	glTranslatef(0.0, 0.0, 0.025);
+	glRotatef(20.0, 0.0, 1.0, 0.0);
+	drawEllipse();
+
+	//right leaf
+	glRotatef(180, 0.0, 1.0, 0.0);
+	glTranslatef(-0.20, 0.0, 0.0);
+	glTranslatef(0.0, 0.0, -0.025);
+	glRotatef(-20.0, 0.0, 1.0, 0.0);
+	drawEllipse();
+
+	glTranslatef(0.0, 0.0, 0.025);
+	glRotatef(20.0, 0.0, 1.0, 0.0);
+	drawEllipse();
 	glPopMatrix();
 }
 
@@ -198,6 +239,7 @@ void display()
 	drawPot();
 	drawStem();
 	drawFlower();
+	drawLeaf();
 
 	glutSwapBuffers();
 }
