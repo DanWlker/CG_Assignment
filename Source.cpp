@@ -1,4 +1,5 @@
 ﻿#include <GL/glut.h>
+#include <iostream>
 #include <math.h>
 #include <windows.h>
 #include "Environment.h"
@@ -129,16 +130,6 @@ void drawCuboid(
 	}
 }
 
-void drawEllipse()
-{
-	glBegin(GL_POLYGON);
-	for (int i = 0; i < 360; i++)
-	{
-		glVertex3f(0.1 * cos(degToRadf(i)), 0.0, 0.04 * sin(degToRadf(i)));
-	}
-	glEnd();
-}
-
 void drawPot()
 {
 	//body
@@ -186,6 +177,16 @@ void drawFlower()
 	glutSolidSphere(0.1, 20, 20);
 
 	glPopMatrix();
+}
+
+void drawEllipse()
+{
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < 360; i++)
+	{
+		glVertex3f(0.1 * cos(degToRadf(i)), 0.0, 0.04 * sin(degToRadf(i)));
+	}
+	glEnd();
 }
 
 void drawLeaf()
@@ -258,6 +259,31 @@ void timer(int value)
 
 int main(int argc, char* argv[])
 {
+	std::cout
+		<< "                  _(_)_                          wWWWw   _" << std::endl
+		<< "      @@@@       (_)@(_)   vVVVv     _     @@@@  (___) _(_)_" << std::endl
+		<< "     @@()@@ wWWWw  (_)\\    (___)   _(_)_  @@()@@   Y  (_)@(_)" << std::endl
+		<< "      @@@@  (___)     `|/    Y    (_)@(_)  @@@@   \\|/   (_)\\" << std::endl
+		<< "       /      Y       \\|    \\|/    /(_)    \\|      |/      |" << std::endl
+		<< "    \\ |     \\ |/       | / \\ | /  \\|/       |/    \\|      \\|/" << std::endl
+		<< "    \\\\|//   \\\\|///  \\\\\\|//\\\\\\|/// \\|///  \\\\\\|//  \\\\|//  \\\\\\|// " << std::endl
+		<< "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << std::endl
+		<< std::endl;
+
+	std::cout
+		<< "Welcome to the Flower Blooming project, brought to you by Hee ZiXi and Chia Zheng Jie." << std::endl
+		<< std::endl
+		<< "Here are some instructions before we start: " << std::endl
+		<< "	1. Use arrow keys to move the light source around." << std::endl
+		<< "	2. Use 'W', 'A', 'S', 'D' to move the camera around." << std::endl
+		<< "	3. Use 'G' to make the flower grow and bloom." << std::endl
+		<< std::endl
+		<< "We hope you enjoy this little project, have fun !" << std::endl
+		<< std::endl
+		<< "Artwork Above Credits to: Joan G. Stark, ASCII Art Archive" <<std::endl;
+
+	system("pause");
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(680, 800);
