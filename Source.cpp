@@ -280,7 +280,7 @@ int main(int argc, char* argv[])
 		<< std::endl
 		<< "We hope you enjoy this little project, have fun !" << std::endl
 		<< std::endl
-		<< "Artwork Above Credits to: Joan G. Stark, ASCII Art Archive" <<std::endl;
+		<< "Artwork Credits: Joan G. Stark, ASCII Art Archive" <<std::endl;
 
 	system("pause");
 
